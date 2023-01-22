@@ -1,18 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Sketch</title>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercise1</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="libraries/p5.min.js"></script>
+  <script src="libraries/p5.sound.min.js"></script>
+  <script>
+    function setup() {
+      var canvas = createCanvas(900, 900);
+      frameRate(240);
+      id = parseInt(document.getElementById("myRange").value), r = sqrt(40/id);
 
-    <link rel="stylesheet" type="text/css" href="style.css">
+      count = new Array(id)
+      for(let i = 0; i < count.length; i++) count[i] = new Array(id);
+      for(let i = 0; i < id; i++) for(let j = 0; j < id; j++) count[i][j] = 0;
+    }
 
-    <script src="libraries/p5.min.js"></script>
-    <script src="libraries/p5.sound.min.js"></script>
-  </head>
+    function draw() {
+      clear();
+      background(255/sqrt(id/10));
+      for(let i = 0; i < id; i++) for(let j = 0; j < id; j++){
+        noStroke();
+        if(count[i][j] > 0) count[i][j] -= 10;
+        fill(count[i][j]);
+        rect(i*(900/id)+r, j*(900/id)+r, 900/id-2*r, 900/id-2*r, 3*r);
+      }
+      if(mouseX < 900 & mouseY < 900) count[parseInt(mouseX/(900/id))][parseInt(mouseY/(900/id))] = min(255, count[parseInt(mouseX/(900/id))][parseInt(mouseY/(900/id))] + 200);
+    }
+  </script>
+</head>
 
-  <body>
-    <script src="sketch.js"></script>
-  </body>
+<body bgcolor='black'>
+  <div class="slidecontainer" style="vertical-align:top">
+    <input type="range" min="2" max="40" value="10" class="slider" id="myRange" onchange="setup()"/>
+    <span style="color:white;">SIZE : <span id="value"></span></span>
+  </div><br>
+  <script>
+    var slider = document.getElementById("myRange");
+    var output = document.getElementById("value");
+    output.innerHTML = slider.value;
+    
+    slider.oninput = function() {
+        output.innerHTML = this.value;
+    }
+  </script>
+  <br>
+  <div id="canvasdiv"></div>
+
+</body>
+
 </html>
