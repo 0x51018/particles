@@ -10,46 +10,34 @@
   <script src="libraries/p5.sound.min.js"></script>
   <script>
     function setup() {
-      var canvas = createCanvas(900, 900);
+      width = windowWidth, height = windowHeight;
+      var canvas = createCanvas(width, height);
       frameRate(240);
-      id = parseInt(document.getElementById("myRange").value), r = sqrt(40/id);
+      id1 = 20, id2 = parseInt(id1 * windowHeight / windowWidth);
+      r = sqrt(40/id2);
 
-      count = new Array(id)
-      for(let i = 0; i < count.length; i++) count[i] = new Array(id);
-      for(let i = 0; i < id; i++) for(let j = 0; j < id; j++) count[i][j] = 0;
+      count = new Array(id1)
+      for(let i = 0; i < count.length; i++) count[i] = new Array(id2);
+      for(let i = 0; i < id1; i++) for(let j = 0; j < id2; j++) count[i][j] = 0;
     }
 
     function draw() {
-      clear();
-      background(255/sqrt(id/10));
-      for(let i = 0; i < id; i++) for(let j = 0; j < id; j++){
+      if(windowWidth != canvas.width/2 || windowHeight != canvas.height/2) setup();
+      //background(255/sqrt(id/10));
+      background(25);
+      for(let i = 0; i < id1; i++) for(let j = 0; j < id2; j++){
         noStroke();
         if(count[i][j] > 0) count[i][j] -= 10;
         fill(count[i][j]);
-        rect(i*(900/id)+r, j*(900/id)+r, 900/id-2*r, 900/id-2*r, 3*r);
+        rect(i*(width/id1)+r, j*(height/id2)+r, width/id1-2*r, height/id2-2*r, 3*r);
       }
-      if(mouseX < 900 & mouseY < 900) count[parseInt(mouseX/(900/id))][parseInt(mouseY/(900/id))] = min(255, count[parseInt(mouseX/(900/id))][parseInt(mouseY/(900/id))] + 200);
+      if(mouseX < width & mouseY < height) count[parseInt(mouseX/(width/id1))][parseInt(mouseY/(height/id2))] = min(255, count[parseInt(mouseX/(width/id1))][parseInt(mouseY/(height/id2))] + 200);
     }
   </script>
 </head>
 
 <body bgcolor='black'>
-  <div class="slidecontainer" style="vertical-align:top">
-    <input type="range" min="2" max="40" value="10" class="slider" id="myRange" onchange="setup()"/>
-    <span style="color:white;">SIZE : <span id="value"></span></span>
-  </div><br>
-  <script>
-    var slider = document.getElementById("myRange");
-    var output = document.getElementById("value");
-    output.innerHTML = slider.value;
-    
-    slider.oninput = function() {
-        output.innerHTML = this.value;
-    }
-  </script>
-  <br>
   <div id="canvasdiv"></div>
-
 </body>
 
 </html>
