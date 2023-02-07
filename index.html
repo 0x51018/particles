@@ -47,7 +47,7 @@
       update() {
         let direction = createVector(mouseX - this.position.x, mouseY - this.position.y);
         direction.normalize();
-        direction.mult(0.7);
+        direction.mult(0.6);
         this.acceleration = direction;
 
         // Calculate wind drag
