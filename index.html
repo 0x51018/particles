@@ -41,13 +41,13 @@
         this.velocity = p5.Vector.random2D();
         this.velocity.mult(5);
         this.acceleration = createVector(0, 0);
-        this.drag = 0.1;
+        this.drag = 0.5;
       }
 
       update() {
         let direction = createVector(mouseX - this.position.x, mouseY - this.position.y);
         direction.normalize();
-        direction.mult(0.5);
+        direction.mult(0.7);
         this.acceleration = direction;
 
         // Calculate wind drag
